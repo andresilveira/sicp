@@ -5,8 +5,10 @@
 (define (assert a b)
   (if (= a b)
     (begin (foreground 'green)
-           (displayln "PASS"))
+           (displayln "PASS")
+           (reset))
     (begin (foreground 'red)
-           (displayln "FAIL"))))
+           (displayln "FAIL")
+           (reset))))
 
 (provide assert)
