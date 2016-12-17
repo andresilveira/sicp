@@ -6,11 +6,11 @@
   )
 )
 
-(if (= 2 2) 1 0)
-(new-if (= 2 2) 1 0)
-
-(if (> 2 2) 1 0)
-(new-if (> 2 2) 1 0)
+; this two expressions return the same value, 0
+; but new-if has a catch shown bellow
+(print
+  (if (> 2 2) 1 0))
+(print (new-if (> 2 2) 1 0))
 
 (define (square x)
   (* x x)
@@ -29,7 +29,19 @@
 )
 
 (define (sqrt-iter guess x)
-  (new-if (good-enough? guess x)
+  (print "sqrt-iter ")
+  (print guess)
+  (print " ")
+  (print x)
+  (println "")
+  ; here, if we use new-if, we would run into a infinite loop. Because the
+  ; interpreter use applicative order, i.e. it evaluates the operators and
+  ; operands in order the order they appear, the interpreter would try to
+  ; evaluate both operands of new-if (guess and (sqrt-iter...)) indefintely
+  ; The same doesn't happen with the normal if function because of it's special
+  ; construction. If's second operand is only evaulated if the predicate
+  ; returns false.
+  (if (good-enough? guess x)
     guess
     (sqrt-iter (improve guess x) x)
   )
@@ -39,4 +51,4 @@
   (sqrt-iter 1.0 x)
 )
 
-(sqrt 25)
+(sqrt 0.00000000005)
